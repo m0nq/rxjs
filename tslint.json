@@ -15,6 +15,11 @@
       "app",
       "camelCase"
     ],
+    "semicolon": [
+      true,
+      "always",
+      "ignore-bound-class-methods"
+    ],
     "component-selector": [
       true,
       "element",
@@ -84,9 +89,9 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+    "use-pipe-transform-interface": true,
+    "rulesDirectory": [
+      "codelyzer"
+    ]
+  }
 }
