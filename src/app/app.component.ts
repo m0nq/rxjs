@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +15,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const numbers = interval(1000);
 
-    const takeFourNumbers = numbers.pipe(take(5));
-
-    takeFourNumbers.subscribe(x => console.log('Next: ', x));
+    numbers
+      .pipe(take(5))
+      .pipe(map(x => x * 10))
+      .subscribe(x => console.log('Next: ', x));
   }
 
   ngOnDestroy() {
