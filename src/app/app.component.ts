@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +9,21 @@ import { Observable } from 'rxjs';
 
 export class AppComponent implements OnInit, OnDestroy {
   title = 'RxJS';
-  observable;
+  mySubject;
 
   ngOnInit() {
-    this.observable = new Observable(observer => {
-      observer.next(1);
-      observer.next(2);
-      observer.next(3);
-      setTimeout(() => {
-        observer.next(4);
-        observer.complete();
-      }, 1000);
-    });
+    this.mySubject = new Subject();
 
-    console.log('just before subscribing');
-    this.observable.subscribe({
-      next(x) { console.log('got value ' + x); },
-      error(err) { console.error('something wrong occurred: ' + err); },
-      complete() { console.log('done'); }
-    });
-    console.log('just after subscribe');
+    this.mySubject.subscribe(x => console.log('First subscriber', x));
+    this.mySubject.next(1);
+    this.mySubject.next(2);
+    this.mySubject.unsubscribe();
+
+    this.mySubject.subscribe(x => console.log('Second subscriber', x));
+    this.mySubject.next(3);
   }
 
   ngOnDestroy() {
-    this.observable.unsubscribe();
+    this.mySubject.unsubscribe();
   }
 }
