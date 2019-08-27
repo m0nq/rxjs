@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, of } from 'rxjs';
-import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const letters = of('a', 'b', 'c', 'd', 'e');
 
     letters
-      .pipe(mergeMap(x => numbers
+      .pipe(switchMap(x => numbers
         .pipe(take(5))
         .pipe(map(i => i + x))))
       .subscribe(x => console.log(x));
