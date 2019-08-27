@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -7,22 +7,22 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'RxJS';
   observable;
 
   ngOnInit() {
-    this.observable = new Observable(subscriber => {
-      subscriber.next(1);
-      subscriber.next(2);
-      subscriber.next(3);
+    this.observable = new Observable(observer => {
+      observer.next(1);
+      observer.next(2);
+      observer.next(3);
       setTimeout(() => {
-        subscriber.next(4);
-        subscriber.complete();
+        observer.next(4);
+        observer.complete();
       }, 1000);
     });
 
-    console.log('just before subscribe');
+    console.log('just before subscribing');
     this.observable.subscribe({
       next(x) { console.log('got value ' + x); },
       error(err) { console.error('something wrong occurred: ' + err); },
