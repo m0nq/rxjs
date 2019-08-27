@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
   mySubject;
 
   ngOnInit() {
-    this.mySubject = new ReplaySubject();
+    const numbers = interval(1000);
 
-    this.mySubject.subscribe(x => console.log('First subscriber', x));
-    this.mySubject.next(1);
-    this.mySubject.next(2);
+    const takeFourNumbers = numbers.pipe(take(5));
 
-    this.mySubject.subscribe(x => console.log('Second subscriber', x));
-    this.mySubject.next(3);
+    takeFourNumbers.subscribe(x => console.log('Next: ', x));
   }
 
   ngOnDestroy() {
